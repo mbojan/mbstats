@@ -1,15 +1,15 @@
 #' Fit two-level null random intercept model
-#' 
+#'
 #' Fit a null two-level random intercept model using closed-form formulas
 #' provided by Snijders nd Bosker (1999)
-#' 
+#'
 #' @param y numeric, dependent variable
 #' @param g numeric, grouping factor
 #' @param data data frame, optional dataset where the variables should be
 #' looked for
 #' @param x object of class "nullModel"
 #' @param ... other arguments passed to/from other methods
-#' 
+#'
 #' @details The function fits a random effect model of the form:
 #'
 #' \deqn{Y_{ij} = \mu + U_j + R_{ij}}{Y_ij = mu + U_j + R_ij}
@@ -18,7 +18,7 @@
 #' for i-th object within j-th group, \eqn{\mu}{mu} is the population mean,
 #' \eqn{U_j} is the effect specific to group j, and \eqn{R_{ij}}{R_ij} is the
 #' within-grup error.
-#' 
+#'
 #' The function estimates between-group and pooled within-group variances as
 #' well as the intra-class correlation coefficient.  The closed-form
 #' expressions are provided by Snijders and Bosker (1999, p. 18--21).
@@ -45,7 +45,7 @@
 #' @export
 #'
 #' @examples
-#' 
+#'
 #' \dontrun{
 #' # fit null model with lmer
 #' library(lme4)
@@ -55,11 +55,8 @@
 #' mm
 #' m
 #' }
-#' 
-nullModel <- function( y, g, data=NULL)
-# y = dependent var
-# g = grouping factor
-{
+#'
+nullModel <- function( y, g, data=NULL) {
     gname <- deparse(substitute(g))
     yname <- deparse(substitute(y))
     if(!is.null(data))
@@ -94,20 +91,19 @@ nullModel <- function( y, g, data=NULL)
 #' @method print nullModel
 #' @export
 #' @rdname nullModel
-print.nullModel <- function(x, ...)
-{
+print.nullModel <- function(x, ...) {
   cat("Null two-level random intercept model\n")
-  cat( x@yname, "  ~  1 | ", x@gname, "\n", sep="")
+  cat( x$yname, "  ~  1 | ", x$gname, "\n", sep="")
   cat("\n")
-  cat("Number of cases: ", x@m, ", number of groups: ", x@n, "\n", sep="")
+  cat("Number of cases: ", x$m, ", number of groups: ", x$n, "\n", sep="")
   cat("\n")
   cat("Random effects:\n")
-  mat <- matrix( c(x@gname, "(Intercept)", x@tau, sqrt(x@tau),
-                   "Residual", "", x@wgvar, sqrt(x@wgvar)),
+  mat <- matrix( c(x$gname, "(Intercept)", x$tau, sqrt(x$tau),
+                   "Residual", "", x$wgvar, sqrt(x$wgvar)),
                 ncol=4, nrow=2,
                 byrow=TRUE,
                 dimnames = list( c("",""), c("Groups", "Name", "Variance", "Std.Dev.")) )
   print(mat, quote=FALSE, digits=max(3, getOption("digits") - 3) )
   cat("\n")
-  cat("Intra-class correlation:", x@intcor, "\n")
+  cat("Intra-class correlation:", x$intcor, "\n")
 }
