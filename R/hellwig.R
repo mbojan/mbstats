@@ -1,11 +1,11 @@
 #' Hellwig's method for choosing subset of independet variables
-#' 
+#'
 #' Hellwig's method selects a subset of independent variables in a linear
 #' regression model based on their correlations with some dependent variable as
 #' well as correlations between themselves. The goal is to select a subset of
 #' variables which are fairly independent from each other but highly correlated
 #' with the dependent variable.
-#' 
+#'
 #' Given \eqn{m} independent variables Hellwig's method consists of evaluating
 #' all \eqn{2^m - 1} combinations using the following steps:
 #' \enumerate{
@@ -15,12 +15,12 @@
 #' variable with the dependent variable, \eqn{r_{ij}}{r_ij} is a correlation
 #' with i-th and j-th dependent variable, and I is a focal set of independent
 #' variables.
-#' 
+#'
 #' \item Integral capacity of information for every combination \eqn{k} is
 #' equal to: \deqn{H_k = \sum_j h_{kj}}{H_k = sum_j h_kj}
 #' }
 #' The subset with the highest value of \eqn{H_k} should be selected.
-#' 
+#'
 #' @param y numeric, dependent variable
 #' @param x numeric matrix, independent variables
 #' @param method character, type of correlation measures used, passed to
@@ -34,7 +34,12 @@
 #'
 #' @export
 #'
-#' @example examples/hellwig.R
+#' @examples
+#' set.seed(1234)
+#' x <- matrix(rnorm(1000), 250, 4)
+#' y <- rnorm(250)
+#' hellwig(y, x)
+
 hellwig <- function( y, x, method="pearson")
 {
   requireNamespace("utils")
