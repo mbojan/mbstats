@@ -20,10 +20,10 @@ etas <- function( object, ... ) UseMethod("etas")
 
 #' @describeIn etas The default method expect vectors. The function requires
 #'   additional argument `fac` -- a vector of the same length as `object`. The
-#'   result is a value of the \eqn{\eta^2}{Eta^2} assuming that we want to
-#'   predict the values of `object` with the values of `fac` using the so called
-#'   "Type I regression of means". For two variables \eqn{y} and \eqn{x} the
-#'   \eqn{\eta}{Eta} is given by the formula:
+#'   result is a value (vector of length 1) of the \eqn{\eta^2}{Eta^2} assuming
+#'   that we want to predict the values of `object` with the values of `fac`
+#'   using the so called "Type I regression of means". For two variables \eqn{y}
+#'   and \eqn{x} the \eqn{\eta}{Eta} is given by the formula:
 #'
 #'   \deqn{\eta^2 = ( D^2(y) - E[D^2(y|x)] ) / D^2(y)}{Eta^2 = ( D^2(y) - E[D^2(y|x)] ) / D^2(y)}
 #'
@@ -58,6 +58,9 @@ etas.default <- function( object, fac, ... ) {
 #'   for the given effect are equal to:
 #'
 #'   \deqn{\frac{SS_{effect}}{SS_{effect}+SS_{resid}}}{SSeffect / (SSeffect+SSresid)}
+#'
+#'   The function returns a data frame with columns `Eta` and `Partial Eta` with
+#'   a row for every term in the model.
 #'
 #' @export
 etas.anova <- function(object, ...) {

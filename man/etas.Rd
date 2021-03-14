@@ -37,10 +37,10 @@ predicting values of \eqn{y} is reduced by using the information provided by
 \itemize{
 \item \code{default}: The default method expect vectors. The function requires
 additional argument \code{fac} -- a vector of the same length as \code{object}. The
-result is a value of the \eqn{\eta^2}{Eta^2} assuming that we want to
-predict the values of \code{object} with the values of \code{fac} using the so called
-"Type I regression of means". For two variables \eqn{y} and \eqn{x} the
-\eqn{\eta}{Eta} is given by the formula:
+result is a value (vector of length 1) of the \eqn{\eta^2}{Eta^2} assuming
+that we want to predict the values of \code{object} with the values of \code{fac}
+using the so called "Type I regression of means". For two variables \eqn{y}
+and \eqn{x} the \eqn{\eta}{Eta} is given by the formula:
 
 \deqn{\eta^2 = ( D^2(y) - E[D^2(y|x)] ) / D^2(y)}{Eta^2 = ( D^2(y) - E[D^2(y|x)] ) / D^2(y)}
 
@@ -54,6 +54,9 @@ where \eqn{SS} are apropriate Sums of Squares.  The ``Partial Eta Squares''
 for the given effect are equal to:
 
 \deqn{\frac{SS_{effect}}{SS_{effect}+SS_{resid}}}{SSeffect / (SSeffect+SSresid)}
+
+The function returns a data frame with columns \code{Eta} and \verb{Partial Eta} with
+a row for every term in the model.
 
 \item \code{lm}: For objects of class \code{lm} the function is applied on the
 result of calling \code{\link[=anova]{anova()}}.
