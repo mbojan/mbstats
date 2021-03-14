@@ -1,13 +1,13 @@
 #' Component variation in PCA analysis
-#' 
+#'
 #' Calculate percent of explained variance for Principal Component Analysis
 #' objects.
-#' 
+#'
 #' The function calculates percentages of variance explained for each component
 #' resulting from Principal Component Analysis. The variance is equal to:
 #' \deqn{100\frac{\sigma_i^2}{\sum_i \sigma_i^2}}{sigma^2 / sum( sigma^2 ) *
 #' 100} where \eqn{\sigma}{sigma} is equal to component's standard deviation.
-#' 
+#'
 #' @param object object of class \code{princomp}
 #' @param ... other arguments currently not supported
 #'
@@ -20,7 +20,11 @@
 #' @export
 #' @method anova princomp
 #'
-#' @example examples/anova.princomp.R
+#' @examples
+#' pcmodel <- princomp( USArrests, cor=TRUE )
+#' pcmodel
+#' anova(pcmodel) # variance prc.
+
 anova.princomp <- function(object, ...) {
 	object$sdev^2 / sum(object$sdev^2) * 100
 }
