@@ -1,29 +1,40 @@
 #' Calculate Eta coefficients
-#' 
+#'
 #' This generic function calculates Eta coefficients which are also known as
 #' "Correlation ratios" or (the squared value) as the "Proportion of
 #' explained variance".
-#' 
+#'
 #' The Eta coefficient (more specifically its squared value) has a
 #' interpretation in terms of the proportion of explained variance.
-#' 
+#'
 #' In the decision theory the interpretation is related to the identification
 #' problem that involves two variables: \eqn{y} and \eqn{x}. The task is two
 #' identify the values of \code{y}.
-#' 
+#'
 #' The value of the \eqn{\eta^2}{Eta^2} is the proportion by which the error of
 #' predicting values of \eqn{y} is reduced by using the information contained
 #' in \eqn{x}.
 #'
 #' @return Values of eta and partial eta coefficients.
-#' 
+#'
 #' @param object the R object
 #' @param fac vector for conditioning variable
 #' @param ... arguments passed to other methods
 #'
 #' @export
 #'
-#' @example examples/etas.R
+#' @examples
+#' x1 <- rnorm(50)
+#' x2 <- rnorm(50)
+#' y <- 5 + 2*x1 + rnorm(50,0,2) + 3*x2 + rnorm(50,0,.5)
+#'
+#' # method for numeric
+#' etas( y, rep(1:2, each=25) )
+#'
+#' # method for 'lm' which calls 'anova'
+#' m <- lm( y ~ x1 + x2 )
+#' etas(m)
+
 etas <- function( object, ... ) UseMethod("etas")
 
 
@@ -35,7 +46,7 @@ etas <- function( object, ... ) UseMethod("etas")
 #' \eqn{\eta^2}{Eta^2} assuming that we want to predict the values of
 #' \code{object} with the values of \code{fac} using the so called ``Type I
 #' regression of means''.
-#' 
+#'
 #' For two variables \eqn{y} and \eqn{x} the \eqn{\eta}{Eta} is given by the
 #' formula:
 #'
