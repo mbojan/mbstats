@@ -2,44 +2,43 @@
 % Please edit documentation in R/hellwig.R
 \name{hellwig}
 \alias{hellwig}
-\title{Hellwig's method for choosing subset of independet variables}
+\title{Hellwig's method for choosing an optimal subset of predictors}
 \usage{
 hellwig(y, x, method = "pearson")
 }
 \arguments{
-\item{y}{numeric, dependent variable}
+\item{y}{numeric, response variable}
 
-\item{x}{numeric matrix, independent variables}
+\item{x}{numeric matrix of predictors}
 
-\item{method}{character, type of correlation measures used, passed to
-\code{\link{cor}}}
+\item{method}{character, type of correlation measures used, passed to \code{\link[=cor]{cor()}}}
 }
 \value{
-Data frame with two columns: \code{k} combination of independent
-variables in the form of x-y-z where x, y, z... are the indices of columns
-in \code{x}, and \code{h} the capacity of the subset \eqn{H_k}.
+Data frame with two columns:
+\itemize{
+\item \code{k} -- combination of predictor variables in the form of x-y-z where x,
+y, z... are the indices of columns in \code{x}, and
+\item \code{h} -- the capacity of the subset \eqn{H_k}.
+}
 }
 \description{
-Hellwig's method selects a subset of independent variables in a linear
-regression model based on their correlations with some dependent variable as
-well as correlations between themselves. The goal is to select a subset of
-variables which are fairly independent from each other but highly correlated
-with the dependent variable.
+Hellwig's method selects a subset of predictors in a linear model such that
+they are correlated with the response but relatively uncorrelated among each
+other.
 }
 \details{
-Given \eqn{m} independent variables Hellwig's method consists of evaluating
-all \eqn{2^m - 1} combinations using the following steps:
+Given \eqn{m} predictors Hellwig's method consists of evaluating all
+\eqn{2^m - 1} combinations using the following steps:
 \enumerate{
-\item Individual capacity of an independent variable in a subset is given
-by: \deqn{h_{kj} = r_{0j}^2 / \sum_{i \in I} r_{ij}}{h_kj = r_0j^2 / sum_{i
-\in I} r_ij} where \eqn{r_{0j}}{r_0j} is correlation of j-th independent
-variable with the dependent variable, \eqn{r_{ij}}{r_ij} is a correlation
-with i-th and j-th dependent variable, and I is a focal set of independent
-variables.
-
-\item Integral capacity of information for every combination \eqn{k} is
-equal to: \deqn{H_k = \sum_j h_{kj}}{H_k = sum_j h_kj}
+\item Individual capacity of a predictor variable in a subset is given by:
+\deqn{h_{kj} = r_{0j}^2 / \sum_{i \in I} r_{ij}}{h_kj = r_0j^2 / sum_{i \in I} r_ij}
+where \eqn{r_{0j}}{r_0j} is correlation of j-th predictor with the
+response variable, \eqn{r_{ij}}{r_ij} is a correlation i-th and j-th
+predictors, and I is the set of predictors under consideration.
+\item Integral capacity of information for every combination \eqn{k} is equal
+to: \deqn{H_k = \sum_j h_{kj}}{H_k = sum_j h_kj}
 }
+
 The subset with the highest value of \eqn{H_k} should be selected.
 }
 \examples{
@@ -47,7 +46,4 @@ set.seed(1234)
 x <- matrix(rnorm(1000), 250, 4)
 y <- rnorm(250)
 hellwig(y, x)
-}
-\references{
-TODO Add references
 }
