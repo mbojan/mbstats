@@ -5,7 +5,7 @@
 \alias{etas.default}
 \alias{etas.anova}
 \alias{etas.lm}
-\title{Calculate Eta coefficients}
+\title{Eta coefficients}
 \usage{
 etas(object, ...)
 
@@ -26,36 +26,27 @@ etas(object, ...)
 Values of eta and partial eta coefficients.
 }
 \description{
-This generic function calculates Eta coefficients which are also known as
-"Correlation ratios" or (the squared value) as the "Proportion of
-explained variance".
-}
-\details{
-The Eta coefficient (more specifically its squared value) has a
-interpretation in terms of the proportion of explained variance.
-
-In the decision theory the interpretation is related to the identification
-problem that involves two variables: \eqn{y} and \eqn{x}. The task is two
-identify the values of \code{y}.
-
+Calculate Eta coefficients, known as "Correlation ratios". Squared value of
+Eta has an interpretation in terms of the proportion of explained variance.
+The interpretation follows from a problem of predicting values of \eqn{y}.
 The value of the \eqn{\eta^2}{Eta^2} is the proportion by which the error of
-predicting values of \eqn{y} is reduced by using the information contained
-in \eqn{x}.
-
-For numeric vectors the function requires additional argument: a
-vector of the same length as the first.  The result is a value of the
-\eqn{\eta^2}{Eta^2} assuming that we want to predict the values of
-\code{object} with the values of \code{fac} using the so called ``Type I
-regression of means''.
-
-For two variables \eqn{y} and \eqn{x} the \eqn{\eta}{Eta} is given by the
-formula:
+predicting values of \eqn{y} is reduced by using the information provided by
+\eqn{x}.
+}
+\section{Methods (by class)}{
+\itemize{
+\item \code{default}: The default method expect vectors. The function requires
+additional argument \code{fac} -- a vector of the same length as \code{object}. The
+result is a value of the \eqn{\eta^2}{Eta^2} assuming that we want to
+predict the values of \code{object} with the values of \code{fac} using the so called
+"Type I regression of means". For two variables \eqn{y} and \eqn{x} the
+\eqn{\eta}{Eta} is given by the formula:
 
 \deqn{\eta^2 = ( D^2(y) - E[D^2(y|x)] ) / D^2(y)}{Eta^2 = ( D^2(y) - E[D^2(y|x)] ) / D^2(y)}
 
-For objects of class \code{anova} the function calculates the Eta's
-and Partial Eta Squares for all effects in the given model. In this setting
-the eta squares for the given effect are equal to:
+\item \code{anova}: For objects of class \code{anova} the function calculates the
+Eta's and Partial Eta Squares for all effects in the given model. In this
+setting the eta squares for the given effect are equal to:
 
 \deqn{\frac{SS_{effect}}{SS_{total}}}{SSeffect / SStotal}
 
@@ -64,18 +55,20 @@ for the given effect are equal to:
 
 \deqn{\frac{SS_{effect}}{SS_{effect}+SS_{resid}}}{SSeffect / (SSeffect+SSresid)}
 
-For objects of class \code{lm} the function is applied on the
-result of calling \code{anova}.
-}
+\item \code{lm}: For objects of class \code{lm} the function is applied on the
+result of calling \code{\link[=anova]{anova()}}.
+}}
+
 \examples{
+### Generate some data
 x1 <- rnorm(50)
 x2 <- rnorm(50)
 y <- 5 + 2*x1 + rnorm(50,0,2) + 3*x2 + rnorm(50,0,.5)
 
-# method for numeric
+### Method for vectors
 etas( y, rep(1:2, each=25) )
 
-# method for 'lm' which calls 'anova'
+### Method for 'lm' which calls 'anova'
 m <- lm( y ~ x1 + x2 )
 etas(m)
 }
