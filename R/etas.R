@@ -28,6 +28,8 @@ etas <- function( object, ... ) UseMethod("etas")
 #'   \deqn{\eta^2 = ( D^2(y) - E[D^2(y|x)] ) / D^2(y)}{Eta^2 = ( D^2(y) - E[D^2(y|x)] ) / D^2(y)}
 #'
 #' @param fac vector for conditioning variable
+#' @param pop_var logical, whether to use population or sample variance in the
+#'   calculation
 #'
 #' @export
 #'
@@ -35,15 +37,21 @@ etas <- function( object, ... ) UseMethod("etas")
 #' ### Generate some data
 #' x1 <- rnorm(50)
 #' x2 <- rnorm(50)
-#' y <- 5 + 2*x1 + rnorm(50,0,2) + 3*x2 + rnorm(50,0,.5)
+#' y <- 5 + 2 * x1 + rnorm(50, 0, 2) + 3 * x2 + rnorm(50, 0, .5)
 #'
 #' ### Method for vectors
-#' etas( y, rep(1:2, each=25) )
-etas.default <- function( object, fac, ... ) {
+#' etas(y, rep(1:2, each = 25))
+etas.default <- function( object, fac, pop_var = FALSE, ... ) {
+  myvar <- if(pop_var) function(x, ...) {
+    n <- length(x)
+    (n - 1) / n * stats::var(x, ...)
+  } else stats::var
 	n <- length(object)
 	if( length(fac) != n )
 		stop("arguments must be of the same length")
-	( stats::var(object) - mean(tapply(object, fac, FUN=stats::var)) ) / stats::var(object)
+	frq <- table(fac)
+	(myvar(object) -
+	    weighted.mean(tapply(object, fac, FUN=myvar), w = frq) ) / myvar(object)
 }
 
 
@@ -85,7 +93,7 @@ etas.anova <- function(object, ...) {
 #' @examples
 #'
 #' ### Method for 'lm' which calls 'anova'
-#' m <- lm( y ~ x1 + x2 )
+#' m <- lm(y ~ x1 + x2)
 #' etas(m)
 
 etas.lm <- function(object, ...) etas.anova(stats::anova(object))

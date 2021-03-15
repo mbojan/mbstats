@@ -9,7 +9,7 @@
 \usage{
 etas(object, ...)
 
-\method{etas}{default}(object, fac, ...)
+\method{etas}{default}(object, fac, pop_var = FALSE, ...)
 
 \method{etas}{anova}(object, ...)
 
@@ -21,6 +21,9 @@ etas(object, ...)
 \item{...}{arguments passed to other methods}
 
 \item{fac}{vector for conditioning variable}
+
+\item{pop_var}{logical, whether to use population or sample variance in the
+calculation}
 }
 \value{
 Values of eta and partial eta coefficients.
@@ -66,12 +69,12 @@ result of calling \code{\link[=anova]{anova()}}.
 ### Generate some data
 x1 <- rnorm(50)
 x2 <- rnorm(50)
-y <- 5 + 2*x1 + rnorm(50,0,2) + 3*x2 + rnorm(50,0,.5)
+y <- 5 + 2 * x1 + rnorm(50, 0, 2) + 3 * x2 + rnorm(50, 0, .5)
 
 ### Method for vectors
-etas( y, rep(1:2, each=25) )
+etas(y, rep(1:2, each = 25))
 
 ### Method for 'lm' which calls 'anova'
-m <- lm( y ~ x1 + x2 )
+m <- lm(y ~ x1 + x2)
 etas(m)
 }

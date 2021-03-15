@@ -10,7 +10,7 @@ d <- structure(
 
 test_that("eta comes out as in Excel :)", {
   expect_equal(
-    with(d, etas(y, x)),
+    with(d, etas(y, x, pop_var = TRUE)),
     0.463831867057674
   )
 })
