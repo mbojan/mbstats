@@ -51,7 +51,7 @@ etas.default <- function( object, fac, pop_var = FALSE, ... ) {
 		stop("arguments must be of the same length")
 	frq <- table(fac)
 	(myvar(object) -
-	    weighted.mean(tapply(object, fac, FUN=myvar), w = frq) ) / myvar(object)
+	    stats::weighted.mean(tapply(object, fac, FUN=myvar), w = frq) ) / myvar(object)
 }
 
 
