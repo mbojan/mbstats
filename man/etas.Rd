@@ -53,7 +53,7 @@ setting the eta squares for the given effect are equal to:
 
 \deqn{\frac{SS_{effect}}{SS_{total}}}{SSeffect / SStotal}
 
-where \eqn{SS} are apropriate Sums of Squares.  The ``Partial Eta Squares''
+where \eqn{SS} are appropriate Sums of Squares.  The ``Partial Eta Squares''
 for the given effect are equal to:
 
 \deqn{\frac{SS_{effect}}{SS_{effect}+SS_{resid}}}{SSeffect / (SSeffect+SSresid)}
