@@ -6,8 +6,7 @@
 \alias{mbstats-package}
 \title{mbstats: Michal's Beautiful Selection of Totally Awesome and Trustworthy Statistical functions}
 \description{
-Unsorted collection of various statististical functions. Perhaps
-    some of them are useful also to others.
+Unsorted collection of various statististical functions. Perhaps some of them are useful also to others.
 }
 \author{
 \strong{Maintainer}: Michal Bojanowski \email{michal2992@gmail.com} (\href{https://orcid.org/0000-0001-7503-852X}{ORCID})
